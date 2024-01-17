@@ -160,6 +160,7 @@ const parts = {
             src: images('./base-triple-wheel.png'),
             type: 'bases',
             cost: 700.5,
+            onSale: true,
         },
     ],
 };

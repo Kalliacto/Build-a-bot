@@ -2,7 +2,7 @@
     <div class="content">
         <button @click="addToCart()" class="add-to-cart">Добавить в корзину</button>
         <div class="top-row">
-            <div class="top part">
+            <div :class="[saleBorderClass, 'top', 'part']">
                 <div class="robot-name">
                     {{ selectedRobot.head.title }}
                 </div>
@@ -13,24 +13,28 @@
             </div>
         </div>
         <div class="middle-row">
-            <div class="left part">
+            <div class="left part" :class="{ 'sale-border': this.selectedRobot.leftArm.onSale }">
+                <span v-show="selectedRobot.leftArm.onSale" class="sale"> Sale!</span>
                 <img v-bind:src="selectedRobot.leftArm.src" title="left arm" />
                 <button v-on:click="selectPreviousLeftArm()" class="prev-selector">&#9650;</button>
                 <button v-on:click="selectNextLeftArm()" class="next-selector">&#9660;</button>
             </div>
-            <div class="center part">
+            <div class="center part" :class="{ 'sale-border': this.selectedRobot.torso.onSale }">
+                <span v-show="selectedRobot.torso.onSale" class="sale"> Sale!</span>
                 <img v-bind:src="selectedRobot.torso.src" title="left arm" />
                 <button v-on:click="selectPreviousTorso()" class="prev-selector">&#9668;</button>
                 <button v-on:click="selectNextTorso()" class="next-selector">&#9658;</button>
             </div>
-            <div class="right part">
+            <div class="right part" :class="{ 'sale-border': this.selectedRobot.rightArm.onSale }">
+                <span v-show="selectedRobot.rightArm.onSale" class="sale"> Sale!</span>
                 <img v-bind:src="selectedRobot.rightArm.src" title="left arm" />
                 <button v-on:click="selectPreviousRightArm()" class="prev-selector">&#9650;</button>
                 <button v-on:click="selectNextRightArm()" class="next-selector">&#9660;</button>
             </div>
         </div>
         <div class="bottom-row">
-            <div class="bottom part">
+            <div class="bottom part" :style="borderStyleBase">
+                <span v-show="selectedRobot.base.onSale" class="sale"> Sale!</span>
                 <img :src="selectedRobot.base.src" title="left arm" />
                 <button @click="selectNextBase()" class="prev-selector">&#9668;</button>
                 <button @click="selectNextBase()" class="next-selector">&#9658;</button>
@@ -58,6 +62,7 @@
 
 <script>
 import availableParts from '../assets/data/parts';
+import createdHookMixin from '../hooks/created-hook-mixin';
 
 function getPreviousValidIndex(index, length) {
     const deprecatedIndex = index - 1;
@@ -71,6 +76,7 @@ function getNextValidIndex(index, length) {
 
 export default {
     name: 'RobotBuilder',
+    mixins: [createdHookMixin],
     data() {
         return {
             cart: [],
@@ -83,6 +89,9 @@ export default {
         };
     },
     computed: {
+        saleBorderClass() {
+            return this.selectedRobot.head.onSale ? 'sale-border' : '';
+        },
         selectedRobot() {
             return {
                 head: availableParts.heads[this.selectedIndexHead],
@@ -91,6 +100,9 @@ export default {
                 rightArm: availableParts.arms[this.selectedIndexRightArm],
                 base: availableParts.bases[this.selectedIndexBase],
             };
+        },
+        borderStyleBase() {
+            return { border: this.selectedRobot.base.onSale ? '3px solid red' : '' };
         },
     },
     methods: {
@@ -134,15 +146,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .part {
     position: relative;
     width: 165px;
     height: 165px;
     border: 3px solid #aaa;
 }
-.part img {
-    width: 165px;
+.part {
+    img {
+        width: 165px;
+    }
 }
 .top-row {
     display: flex;
@@ -260,5 +274,8 @@ th {
 }
 .cost {
     text-align: right;
+}
+.sale-border {
+    border: 3px solid red;
 }
 </style>
