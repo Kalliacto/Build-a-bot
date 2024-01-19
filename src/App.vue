@@ -12,18 +12,21 @@
     </header>
     <main>
         <RobotBuilder />
+        <!-- <Search /> -->
     </main>
 </template>
 
 <script>
 // import HomePage from './pages/HomePage.vue';
 import RobotBuilder from './pages/RobotBuilder.vue';
+// import Search from './components/search/Search.vue';
 
 export default {
     name: 'App',
     components: {
         // HomePage,
         RobotBuilder,
+        // Search,
     },
 };
 </script>
@@ -48,6 +51,9 @@ body {
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
 }
+</style>
+
+<style scoped>
 main {
     margin: 0 auto;
     padding: 30px;
