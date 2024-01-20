@@ -19,7 +19,7 @@
 <script>
 // import HomePage from './pages/HomePage.vue';
 import RobotBuilder from './pages/RobotBuilder.vue';
-// import Search from './components/search/Search.vue';
+// import Search from './components/Search/Search.vue';
 
 export default {
     name: 'App',

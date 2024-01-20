@@ -43,12 +43,23 @@ export default {
             return this.parts[this.selectedPartIndex];
         },
     },
+    created() {
+        this.emitSelectedPart();
+    },
+    updated() {
+        this.emitSelectedPart();
+    },
     methods: {
+        emitSelectedPart() {
+            this.$emit('partSelected', this.selectedPart);
+        },
         selectNextPart() {
             this.selectedPartIndex = getNextValidIndex(this.selectedPartIndex, this.parts.length);
+            // this.emitSelectedPart(); Если не использовать updated(), который следит за изменением чеголибо в компоненте
         },
         selectPreviousPart() {
             this.selectedPartIndex = getPreviousValidIndex(this.selectedPartIndex, this.parts.length);
+            // this.emitSelectedPart();
         },
     },
 };
@@ -108,7 +119,7 @@ export default {
     top: -3px;
     left: -28px;
     width: 25px;
-    height: 168px;
+    height: 171px;
 }
 .next-selector {
     position: absolute;
@@ -116,7 +127,7 @@ export default {
     top: -3px;
     right: -28px;
     width: 25px;
-    height: 168px;
+    height: 171px;
 }
 .left .prev-selector:after,
 .right .prev-selector:after {
@@ -143,27 +154,27 @@ export default {
 .left .prev-selector {
     top: -28px;
     left: -3px;
-    width: 140px;
+    width: 144px;
     height: 25px;
 }
 .left .next-selector {
     top: auto;
     bottom: -28px;
     left: -3px;
-    width: 140px;
+    width: 144px;
     height: 25px;
 }
 .right .prev-selector {
     top: -28px;
-    left: 22px;
-    width: 140px;
+    left: 25px;
+    width: 144px;
     height: 25px;
 }
 .right .next-selector {
     top: auto;
     bottom: -28px;
     left: 22px;
-    width: 140px;
+    width: 144px;
     height: 25px;
 }
 .highlight {

@@ -1,16 +1,39 @@
 <template>
     <div class="content">
-        <button @click="addToCart()" class="add-to-cart">Добавить в корзину</button>
+        <div class="cart-container">
+            <button @click="addToCart()" class="add-to-cart">Добавить в корзину</button>
+            <RobotBuilderPreview :selectedRobot="selectedRobot" />
+        </div>
         <div class="top-row">
-            <PartSelector :parts="availableParts.heads" position="top" />
+            <PartSelector
+                :parts="availableParts.heads"
+                position="top"
+                @partSelected="(part) => (selectedRobot.head = part)"
+            />
         </div>
         <div class="middle-row">
-            <PartSelector :parts="availableParts.arms" position="left" />
-            <PartSelector :parts="availableParts.torsos" position="center" />
-            <PartSelector :parts="availableParts.arms" position="right" />
+            <PartSelector
+                :parts="availableParts.arms"
+                position="left"
+                @partSelected="(part) => (selectedRobot.leftArm = part)"
+            />
+            <PartSelector
+                :parts="availableParts.torsos"
+                position="center"
+                @partSelected="(part) => (selectedRobot.torso = part)"
+            />
+            <PartSelector
+                :parts="availableParts.arms"
+                position="right"
+                @partSelected="(part) => (selectedRobot.rightArm = part)"
+            />
         </div>
         <div class="bottom-row">
-            <PartSelector :parts="availableParts.bases" position="bottom" />
+            <PartSelector
+                :parts="availableParts.bases"
+                position="bottom"
+                @partSelected="(part) => (selectedRobot.base = part)"
+            />
         </div>
         <div>
             <h1>Корзина</h1>
@@ -30,16 +53,18 @@
             </table>
         </div>
     </div>
+    // {{ console.log(selectedRobot) }}
 </template>
 
 <script>
 import availableParts from '../assets/data/parts';
 import createdHookMixin from '../hooks/created-hook-mixin';
 import PartSelector from '../components/PartSelector/PartSelector.vue';
+import RobotBuilderPreview from '../components/RobotBuilderPreview/RobotBuilderPreview.vue';
 
 export default {
     name: 'RobotBuilder',
-    components: { PartSelector },
+    components: { PartSelector, RobotBuilderPreview },
     mixins: [createdHookMixin],
     data() {
         return {
@@ -65,6 +90,7 @@ export default {
     methods: {
         addToCart() {
             const robot = this.selectedRobot;
+            console.log(robot);
             const cost =
                 robot.head.cost + robot.leftArm.cost + robot.rightArm.cost + robot.base.cost + robot.torso.cost;
             this.cart.push(Object.assign({}, robot, { cost }));
@@ -73,7 +99,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.content {
+    position: relative;
+    margin: 20px 0;
+}
 .part {
     position: relative;
     width: 165px;
@@ -97,5 +127,16 @@ export default {
     display: flex;
     justify-content: space-around;
     border-top: none;
+}
+.add-to-cart {
+    width: 100%;
+}
+.cart-container {
+    position: absolute;
+    right: 1%;
+    top: -40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 </style>
