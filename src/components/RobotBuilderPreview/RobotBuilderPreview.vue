@@ -21,7 +21,7 @@ export default {
     props: {
         selectedRobot: {
             type: Object,
-            // required: true,
+            required: true,
         },
     },
 };

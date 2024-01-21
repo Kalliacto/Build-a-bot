@@ -1,8 +1,11 @@
 <template>
     <div class="content">
+        <div class="part-info" id="partInfo"></div>
         <div class="cart-container">
             <button @click="addToCart()" class="add-to-cart">Добавить в корзину</button>
-            <RobotBuilderPreview :selectedRobot="selectedRobot" />
+            <CollapsibleSection>
+                <RobotBuilderPreview :selectedRobot="selectedRobot" />
+            </CollapsibleSection>
         </div>
         <div class="top-row">
             <PartSelector
@@ -53,7 +56,6 @@
             </table>
         </div>
     </div>
-    // {{ console.log(selectedRobot) }}
 </template>
 
 <script>
@@ -61,10 +63,11 @@ import availableParts from '../assets/data/parts';
 import createdHookMixin from '../hooks/created-hook-mixin';
 import PartSelector from '../components/PartSelector/PartSelector.vue';
 import RobotBuilderPreview from '../components/RobotBuilderPreview/RobotBuilderPreview.vue';
+import CollapsibleSection from '../components/Shared/CollapsibleSection.vue';
 
 export default {
     name: 'RobotBuilder',
-    components: { PartSelector, RobotBuilderPreview },
+    components: { PartSelector, RobotBuilderPreview, CollapsibleSection },
     mixins: [createdHookMixin],
     data() {
         return {
@@ -138,5 +141,11 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+.part-info {
+    position: absolute;
+    left: 0;
+    width: 210px;
+    max-height: 210px;
 }
 </style>

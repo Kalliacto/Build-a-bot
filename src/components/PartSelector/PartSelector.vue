@@ -3,10 +3,17 @@
         <div class="robot-name" v-show="selectedPart.type === 'heads'">
             {{ selectedPart.title }}
         </div>
-        <img :src="selectedPart.src" :title="selectedPart.title" />
+        <img :src="selectedPart.src" :title="selectedPart.title" @click="showPartInfo = !showPartInfo" />
         <button @click="selectPreviousPart()" class="prev-selector"></button>
         <button @click="selectNextPart()" class="next-selector"></button>
         <span class="sale" v-show="selectedPart.onSale">Sale!</span>
+        <teleport to="#partInfo" v-if="showPartInfo">
+            <div>
+                <div>{{ selectedPart.cost }} {{ selectedPart.title }} {{ selectedPart.type }}</div>
+                <div>{{ selectedPart.description }}</div>
+                <hr />
+            </div>
+        </teleport>
     </div>
 </template>
 
@@ -36,7 +43,7 @@ export default {
         },
     },
     data() {
-        return { selectedPartIndex: 0 };
+        return { selectedPartIndex: 0, showPartInfo: false };
     },
     computed: {
         selectedPart() {
@@ -55,7 +62,8 @@ export default {
         },
         selectNextPart() {
             this.selectedPartIndex = getNextValidIndex(this.selectedPartIndex, this.parts.length);
-            // this.emitSelectedPart(); Если не использовать updated(), который следит за изменением чеголибо в компоненте
+            //  Если не использовать updated(), который следит за изменением чеголибо в компоненте
+            // this.emitSelectedPart();
         },
         selectPreviousPart() {
             this.selectedPartIndex = getPreviousValidIndex(this.selectedPartIndex, this.parts.length);
