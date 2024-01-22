@@ -28,6 +28,9 @@ export default {
         RobotBuilder,
         // Search,
     },
+    provide: {
+        userName: 'Jim',
+    },
 };
 </script>
 

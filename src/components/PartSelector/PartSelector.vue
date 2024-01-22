@@ -14,6 +14,7 @@
                 <hr />
             </div>
         </teleport>
+        {{ console.log(userName) }}
     </div>
 </template>
 
@@ -29,6 +30,7 @@ function getNextValidIndex(index, length) {
 }
 
 export default {
+    inject: ['userName'],
     props: {
         parts: {
             type: Array,
