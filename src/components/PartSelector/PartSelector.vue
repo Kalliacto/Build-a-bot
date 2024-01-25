@@ -3,10 +3,17 @@
         <div class="robot-name" v-show="selectedPart.type === 'heads'">
             {{ selectedPart.title }}
         </div>
-        <img :src="selectedPart.src" :title="selectedPart.title" />
+        <img :src="selectedPart.src" :title="selectedPart.title" @click="showPartInfo = !showPartInfo" />
         <button @click="selectPreviousPart()" class="prev-selector"></button>
         <button @click="selectNextPart()" class="next-selector"></button>
         <span class="sale" v-show="selectedPart.onSale">Sale!</span>
+        <teleport to="#partInfo" v-if="showPartInfo">
+            <div>
+                <div>{{ selectedPart.cost }} {{ selectedPart.title }} {{ selectedPart.type }}</div>
+                <div>{{ selectedPart.description }}</div>
+                <hr />
+            </div>
+        </teleport>
     </div>
 </template>
 
@@ -22,6 +29,7 @@ function getNextValidIndex(index, length) {
 }
 
 export default {
+    inject: ['userName'],
     props: {
         parts: {
             type: Array,
@@ -36,19 +44,31 @@ export default {
         },
     },
     data() {
-        return { selectedPartIndex: 0 };
+        return { selectedPartIndex: 0, showPartInfo: false };
     },
     computed: {
         selectedPart() {
             return this.parts[this.selectedPartIndex];
         },
     },
+    created() {
+        this.emitSelectedPart();
+    },
+    updated() {
+        this.emitSelectedPart();
+    },
     methods: {
+        emitSelectedPart() {
+            this.$emit('partSelected', this.selectedPart);
+        },
         selectNextPart() {
             this.selectedPartIndex = getNextValidIndex(this.selectedPartIndex, this.parts.length);
+            //  Если не использовать updated(), который следит за изменением чеголибо в компоненте
+            // this.emitSelectedPart();
         },
         selectPreviousPart() {
             this.selectedPartIndex = getPreviousValidIndex(this.selectedPartIndex, this.parts.length);
+            // this.emitSelectedPart();
         },
     },
 };
@@ -108,7 +128,7 @@ export default {
     top: -3px;
     left: -28px;
     width: 25px;
-    height: 168px;
+    height: 171px;
 }
 .next-selector {
     position: absolute;
@@ -116,7 +136,7 @@ export default {
     top: -3px;
     right: -28px;
     width: 25px;
-    height: 168px;
+    height: 171px;
 }
 .left .prev-selector:after,
 .right .prev-selector:after {
@@ -143,27 +163,27 @@ export default {
 .left .prev-selector {
     top: -28px;
     left: -3px;
-    width: 140px;
+    width: 144px;
     height: 25px;
 }
 .left .next-selector {
     top: auto;
     bottom: -28px;
     left: -3px;
-    width: 140px;
+    width: 144px;
     height: 25px;
 }
 .right .prev-selector {
     top: -28px;
-    left: 22px;
-    width: 140px;
+    left: 25px;
+    width: 144px;
     height: 25px;
 }
 .right .next-selector {
     top: auto;
     bottom: -28px;
     left: 22px;
-    width: 140px;
+    width: 144px;
     height: 25px;
 }
 .highlight {
