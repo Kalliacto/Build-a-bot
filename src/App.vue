@@ -3,13 +3,13 @@
         <nav>
             <ul>
                 <li class="nav-item">
-                    <router-link class="nav-link" :to="{ name: 'Home' }">
+                    <router-link class="nav-link" :to="{ name: 'Home' }" exact>
                         <img class="logo" src="./assets/build-a-bot-logo.png" alt="logo" />
                         Build-a-bot
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" :to="{ name: 'Build' }"> Build </router-link>
+                    <router-link class="nav-link" :to="{ name: 'Build' }" exact> Build </router-link>
                 </li>
             </ul>
         </nav>
@@ -73,6 +73,10 @@ ul {
     text-decoration: none;
     cursor: pointer;
     color: inherit;
+}
+
+.router-link-active {
+    color: #fff;
 }
 .nav-item {
     display: inline-block;
