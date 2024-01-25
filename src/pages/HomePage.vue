@@ -3,7 +3,7 @@
         <div>
             <img class="robot" src="../assets/robot-home.png" aria-hidden="true" />
         </div>
-        <div class="get-started"><a href="">Get started</a> building your first robot!</div>
+        <div class="get-started"><router-link to="/build">Get started</router-link> building your first robot!</div>
     </div>
 </template>
 
@@ -18,9 +18,14 @@ export default {
 <style scoped>
 .home {
     text-align: center;
+    min-height: 540px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 .robot {
-    height: 300px;
+    height: 440px;
 }
 .get-started {
 }

@@ -14,7 +14,6 @@
                 <hr />
             </div>
         </teleport>
-        {{ console.log(userName) }}
     </div>
 </template>
 

@@ -3,31 +3,26 @@
         <nav>
             <ul>
                 <li class="nav-item">
-                    <img class="logo" src="./assets/build-a-bot-logo.png" alt="logo" />
-                    Build-a-bot
+                    <router-link class="nav-link" :to="{ name: 'Home' }">
+                        <img class="logo" src="./assets/build-a-bot-logo.png" alt="logo" />
+                        Build-a-bot
+                    </router-link>
                 </li>
-                <!-- <li class="nav-item"></li> -->
+                <li class="nav-item">
+                    <router-link class="nav-link" :to="{ name: 'Build' }"> Build </router-link>
+                </li>
             </ul>
         </nav>
     </header>
     <main>
-        <RobotBuilder />
-        <!-- <Search /> -->
+        <router-view />
     </main>
 </template>
 
 <script>
-// import HomePage from './pages/HomePage.vue';
-import RobotBuilder from './pages/RobotBuilder.vue';
-// import Search from './components/Search/Search.vue';
-
 export default {
     name: 'App',
-    components: {
-        // HomePage,
-        RobotBuilder,
-        // Search,
-    },
+    components: {},
     provide: {
         userName: 'Jim',
     },
@@ -72,6 +67,12 @@ header {
 ul {
     padding: 3px;
     display: flex;
+}
+
+.nav-link {
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
 }
 .nav-item {
     display: inline-block;
