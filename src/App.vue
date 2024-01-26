@@ -14,15 +14,19 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <router-view />
-    </main>
+    <div class="container">
+        <aside class="aside">
+            <router-view name="asideBar"> </router-view>
+        </aside>
+        <main>
+            <router-view />
+        </main>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'App',
-    components: {},
     provide: {
         userName: 'Jim',
     },
@@ -56,7 +60,7 @@ main {
     margin: 0 auto;
     padding: 30px;
     background-color: #fff;
-    width: 1084px;
+    width: 964px;
     min-height: 300px;
 }
 header {
@@ -87,5 +91,17 @@ ul {
 .logo {
     vertical-align: middle;
     height: 30px;
+}
+.container {
+    display: flex;
+    margin: 10px auto 0 auto;
+    justify-content: center;
+    max-width: 1084px;
+}
+.aside {
+    padding: 30px;
+    background-color: #aaa;
+    width: 100px;
+    min-height: 100%;
 }
 </style>
