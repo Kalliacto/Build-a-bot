@@ -4,6 +4,15 @@
             {{ selectedPart.title }}
         </div>
         <img :src="selectedPart.src" :title="selectedPart.title" @click="showPartInfo = !showPartInfo" />
+        <!-- <img :src="selectedPart.src" :title="selectedPart.title"  /> -->
+        <router-link
+            :to="{
+                name: 'Parts',
+                params: { partType: this.selectedPart.type, id: this.selectedPart.id },
+            }"
+        >
+            <span class="part-info" @click="showPartPage()">{{ selectedPart.title }}</span></router-link
+        >
         <button @click="selectPreviousPart()" class="prev-selector"></button>
         <button @click="selectNextPart()" class="next-selector"></button>
         <span class="sale" v-show="selectedPart.onSale">Sale!</span>
@@ -44,7 +53,10 @@ export default {
         },
     },
     data() {
-        return { selectedPartIndex: 0, showPartInfo: false };
+        return {
+            selectedPartIndex: 0,
+            //  showPartInfo: false,
+        };
     },
     computed: {
         selectedPart() {
@@ -196,5 +208,14 @@ export default {
     width: max-content;
     left: 50%;
     transform: translateX(-50%);
+}
+.part-info {
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+    z-index: 2;
+    color: crimson;
+    font-size: 12px;
+    cursor: pointer;
 }
 </style>
