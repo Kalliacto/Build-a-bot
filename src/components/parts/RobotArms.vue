@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="parts">
         <h2>Руки</h2>
         Руки - это то, как ваш робот будет взаимодействовать с окружающим миром. Они бывают самых разных форм и функций.
         <div v-for="(arm, idx) in arms" :key="idx">
-            <h4>{{ arm.title }}</h4>
+            <h4 class="mini-title">{{ arm.title }}</h4>
             <div>{{ arm.description }}</div>
         </div>
     </div>
@@ -19,3 +19,15 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.parts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+}
+.mini-title {
+    margin-bottom: 15px;
+}
+</style>

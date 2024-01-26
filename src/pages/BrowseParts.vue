@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Browse Parts</h1>
+        <h1>Просмотр деталей</h1>
         <ul class="menu">
             <router-link :to="{ name: 'BrowseHeads' }">
                 <li>Головы</li>
@@ -28,6 +28,7 @@ export default {
 <style scoped>
 h1 {
     text-align: center;
+    margin-bottom: 30px;
 }
 .menu {
     display: flex;
