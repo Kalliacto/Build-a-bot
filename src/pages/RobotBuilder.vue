@@ -56,6 +56,7 @@
             </table>
         </div>
     </div>
+    {{ console.log(addedToCart) }}
 </template>
 
 <script>
@@ -67,10 +68,21 @@ import CollapsibleSection from '../components/shared/CollapsibleSection.vue';
 
 export default {
     name: 'RobotBuilder',
+    beforeRouteLeave(to, from, next) {
+        if (this.addedToCart) {
+            next(true);
+        } else {
+            const response = confirm(
+                'Вы не добавили своего робота в корзинуб вы уверены, что хотите покинуть страницу?'
+            );
+            next(response);
+        }
+    },
     components: { PartSelector, RobotBuilderPreview, CollapsibleSection },
     mixins: [createdHookMixin],
     data() {
         return {
+            addedToCart: false,
             cart: [],
             availableParts,
             selectedRobot: {
@@ -93,10 +105,10 @@ export default {
     methods: {
         addToCart() {
             const robot = this.selectedRobot;
-            console.log(robot);
             const cost =
                 robot.head.cost + robot.leftArm.cost + robot.rightArm.cost + robot.base.cost + robot.torso.cost;
             this.cart.push(Object.assign({}, robot, { cost }));
+            this.addedToCart = true;
         },
     },
 };
