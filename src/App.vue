@@ -11,6 +11,10 @@
                 <li class="nav-item">
                     <router-link class="nav-link" :to="{ name: 'Build' }" exact> Build </router-link>
                 </li>
+                <li class="nav-item cart">
+                    <router-link class="nav-link" to="/cart" exact> Корзина </router-link>
+                    <div v-show="cart.length" class="cart-items">{{ cart.length }}</div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -27,8 +31,10 @@
 <script>
 export default {
     name: 'App',
-    provide: {
-        userName: 'Jim',
+    computed: {
+        cart() {
+            return this.$store.state.cart;
+        },
     },
 };
 </script>
@@ -69,7 +75,7 @@ header {
     margin: 0 auto;
 }
 ul {
-    padding: 3px;
+    padding: 10px;
     display: flex;
 }
 
@@ -103,5 +109,24 @@ ul {
     background-color: #aaa;
     width: 100px;
     min-height: 100%;
+}
+.nav-item.cart {
+    position: relative;
+    margin-left: auto;
+    border: none;
+    margin-right: 10px;
+}
+.cart-items {
+    position: absolute;
+    top: -3px;
+    right: -9px;
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: mediumseagreen;
 }
 </style>
