@@ -61,9 +61,9 @@
 <script>
 import availableParts from '../assets/data/parts';
 import createdHookMixin from '../hooks/created-hook-mixin';
-import PartSelector from '../components/PartSelector/PartSelector.vue';
-import RobotBuilderPreview from '../components/RobotBuilderPreview/RobotBuilderPreview.vue';
-import CollapsibleSection from '../components/Shared/CollapsibleSection.vue';
+import PartSelector from '../components/partSelector/PartSelector.vue';
+import RobotBuilderPreview from '../components/robotBuilderPreview/RobotBuilderPreview.vue';
+import CollapsibleSection from '../components/shared/CollapsibleSection.vue';
 
 export default {
     name: 'RobotBuilder',
