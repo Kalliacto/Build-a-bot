@@ -3,7 +3,7 @@
         <h2>Головы</h2>
         Голова - это то место, где будет находиться мозг вашего робота. Головы обладают разными возможностями, поэтому
         обязательно выберите ту, которая соответствует вашим потребностям.
-        <div v-for="(head, idx) in heads" :key="idx">
+        <div v-for="(head, idx) in parts.heads" :key="idx">
             <h4 class="mini-title">{{ head.title }}</h4>
             <div>{{ head.description }}</div>
         </div>
@@ -11,13 +11,11 @@
 </template>
 
 <script>
-import parts from '../../assets/data/parts';
+import getPartsMixin from './get-parts-mixin';
 
 export default {
     name: 'RobotHeads',
-    data() {
-        return { heads: parts.heads };
-    },
+    mixins: [getPartsMixin],
 };
 </script>
 

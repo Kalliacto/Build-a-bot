@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div v-if="availableParts" class="content">
         <div class="part-info" id="partInfo"></div>
         <div class="cart-container">
             <button @click="addToCart()" class="add-to-cart">Добавить в корзину</button>
@@ -38,41 +38,36 @@
                 @partSelected="(part) => (selectedRobot.base = part)"
             />
         </div>
-        <div>
-            <h1>Корзина</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Robot</th>
-                        <th class="cost">Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(robot, index) in cart" :key="index">
-                        <td>{{ robot.head.title }}</td>
-                        <th class="cost">{{ robot.cost }}</th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 </template>
 
 <script>
-import availableParts from '../assets/data/parts';
-import createdHookMixin from '../hooks/created-hook-mixin';
-import PartSelector from '../components/PartSelector/PartSelector.vue';
-import RobotBuilderPreview from '../components/RobotBuilderPreview/RobotBuilderPreview.vue';
-import CollapsibleSection from '../components/Shared/CollapsibleSection.vue';
+import createdHookMixin from '@/hooks/created-hook-mixin';
+import PartSelector from '@/components/partSelector/PartSelector.vue';
+import RobotBuilderPreview from '@/components/robotBuilderPreview/RobotBuilderPreview.vue';
+import CollapsibleSection from '@/components/shared/CollapsibleSection.vue';
 
 export default {
     name: 'RobotBuilder',
+    created() {
+        this.$store.dispatch('getParts');
+    },
+    beforeRouteLeave(to, from, next) {
+        if (this.addedToCart) {
+            next(true);
+        } else {
+            const response = confirm(
+                'Вы не добавили своего робота в корзинуб вы уверены, что хотите покинуть страницу?'
+            );
+            next(response);
+        }
+    },
     components: { PartSelector, RobotBuilderPreview, CollapsibleSection },
     mixins: [createdHookMixin],
     data() {
         return {
+            addedToCart: false,
             cart: [],
-            availableParts,
             selectedRobot: {
                 head: {},
                 leftArm: {},
@@ -83,6 +78,9 @@ export default {
         };
     },
     computed: {
+        availableParts() {
+            return this.$store.state.parts;
+        },
         saleBorderClass() {
             return this.selectedRobot.head.onSale ? 'sale-border' : '';
         },
@@ -93,10 +91,10 @@ export default {
     methods: {
         addToCart() {
             const robot = this.selectedRobot;
-            console.log(robot);
             const cost =
                 robot.head.cost + robot.leftArm.cost + robot.rightArm.cost + robot.base.cost + robot.torso.cost;
-            this.cart.push(Object.assign({}, robot, { cost }));
+            this.$store.commit('addRobotToCart', { ...robot, cost });
+            this.addedToCart = true;
         },
     },
 };
@@ -106,6 +104,8 @@ export default {
 .content {
     position: relative;
     margin: 20px 0;
+    padding-right: 85px;
+    padding-top: 25px;
 }
 .part {
     position: relative;
@@ -147,5 +147,6 @@ export default {
     left: 0;
     width: 210px;
     max-height: 210px;
+    width: fit-content;
 }
 </style>

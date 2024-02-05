@@ -9,6 +9,7 @@ import RobotTorsos from '../components/parts/RobotTorsos.vue';
 import RobotBases from '../components/parts/RobotBases.vue';
 import SideBarStandard from '../components/sideBars/SideBarStandard.vue';
 import SideBarBuild from '../components/sideBars/SideBarBuild.vue';
+import CartPage from '../pages/CartPage.vue';
 
 export default createRouter({
     history: createWebHistory(),
@@ -61,6 +62,15 @@ export default createRouter({
             name: 'Parts',
             component: PartInfoPage,
             props: true,
+            beforeEnter(to, from, nextF) {
+                const isValidId = Number.isInteger(Number(to.params.id));
+                nextF(isValidId);
+            },
+        },
+        {
+            path: '/cart',
+            name: 'CartPage',
+            component: CartPage,
         },
     ],
 });
