@@ -42,11 +42,11 @@
 </template>
 
 <script>
-import availableParts from '../assets/data/parts';
-import createdHookMixin from '../hooks/created-hook-mixin';
-import PartSelector from '../components/partSelector/PartSelector.vue';
-import RobotBuilderPreview from '../components/robotBuilderPreview/RobotBuilderPreview.vue';
-import CollapsibleSection from '../components/shared/CollapsibleSection.vue';
+import availableParts from '@/assets/data/parts';
+import createdHookMixin from '@/hooks/created-hook-mixin';
+import PartSelector from '@/components/partSelector/PartSelector.vue';
+import RobotBuilderPreview from '@/components/robotBuilderPreview/RobotBuilderPreview.vue';
+import CollapsibleSection from '@/components/shared/CollapsibleSection.vue';
 
 export default {
     name: 'RobotBuilder',
