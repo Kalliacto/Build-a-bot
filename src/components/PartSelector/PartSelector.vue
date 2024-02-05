@@ -217,5 +217,6 @@ export default {
     color: crimson;
     font-size: 12px;
     cursor: pointer;
+    width: fit-content;
 }
 </style>

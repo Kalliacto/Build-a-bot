@@ -2,7 +2,7 @@
     <div class="parts">
         <h2>Руки</h2>
         Руки - это то, как ваш робот будет взаимодействовать с окружающим миром. Они бывают самых разных форм и функций.
-        <div v-for="(arm, idx) in arms" :key="idx">
+        <div v-for="(arm, idx) in parts.arms" :key="idx">
             <h4 class="mini-title">{{ arm.title }}</h4>
             <div>{{ arm.description }}</div>
         </div>
@@ -10,13 +10,11 @@
 </template>
 
 <script>
-import parts from '../../assets/data/parts';
+import getPartsMixin from './get-parts-mixin';
 
 export default {
     name: 'RobotArms',
-    data() {
-        return { arms: parts.arms };
-    },
+    mixins: [getPartsMixin],
 };
 </script>
 

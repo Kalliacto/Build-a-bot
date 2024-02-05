@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div v-if="availableParts" class="content">
         <div class="part-info" id="partInfo"></div>
         <div class="cart-container">
             <button @click="addToCart()" class="add-to-cart">Добавить в корзину</button>
@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import availableParts from '@/assets/data/parts';
 import createdHookMixin from '@/hooks/created-hook-mixin';
 import PartSelector from '@/components/partSelector/PartSelector.vue';
 import RobotBuilderPreview from '@/components/robotBuilderPreview/RobotBuilderPreview.vue';
@@ -50,6 +49,9 @@ import CollapsibleSection from '@/components/shared/CollapsibleSection.vue';
 
 export default {
     name: 'RobotBuilder',
+    created() {
+        this.$store.dispatch('getParts');
+    },
     beforeRouteLeave(to, from, next) {
         if (this.addedToCart) {
             next(true);
@@ -66,7 +68,6 @@ export default {
         return {
             addedToCart: false,
             cart: [],
-            availableParts,
             selectedRobot: {
                 head: {},
                 leftArm: {},
@@ -77,6 +78,9 @@ export default {
         };
     },
     computed: {
+        availableParts() {
+            return this.$store.state.parts;
+        },
         saleBorderClass() {
             return this.selectedRobot.head.onSale ? 'sale-border' : '';
         },
@@ -100,6 +104,8 @@ export default {
 .content {
     position: relative;
     margin: 20px 0;
+    padding-right: 85px;
+    padding-top: 25px;
 }
 .part {
     position: relative;
@@ -141,5 +147,6 @@ export default {
     left: 0;
     width: 210px;
     max-height: 210px;
+    width: fit-content;
 }
 </style>
